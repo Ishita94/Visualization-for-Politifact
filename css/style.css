@@ -1,0 +1,525 @@
+/* Below from Ishita */
+
+/*div{*/
+/*    outline: thin solid #ddd;*/
+/*}*/
+body {
+    background-color: #2960ba;
+}
+p{
+    display:flex;
+    color: white;
+}
+.scatterplotContainer{
+    width: 900px;
+
+}
+
+.stackedBarChartContainer{
+    width: 400px;
+
+}
+
+h1{
+    /*font-style:italic;*/
+    text-align:center;
+    stroke:white;
+    color:white;
+}
+h3{
+    /*font-style:italic;*/
+    color:white;
+}
+h4{
+    /*font-style:italic;*/
+    text-align:left;
+    padding: 0;
+    white-space:nowrap;
+    width:auto;
+    color:white;
+
+}
+.summeryTextContainer{
+    width:auto;
+}
+.container {
+    display: flex;
+    /*margin-top: 10px;*/
+}
+.margin-top {
+    margin-top: 20px;
+}
+.margin-left {
+    margin-left: 25px;
+}
+
+#searchBoxDiv{
+    width: 200px;
+    height: 200px;
+}
+#sourceButtonPanelDiv{
+    width: 200px;
+}
+#filterContainer{
+    height: 150px;
+}
+
+/* Legend */
+#legendDiv{
+    width: 300px;
+    margin-left: 500px;
+    margin-bottom: 20px;
+}
+.legend {
+    margin: 20px 0;
+    list-style: none;
+    padding: 0;
+    font-size: x-small;
+}
+.legend-btn {
+    display: inline-block;
+    margin: 0 20px 0 0;
+    /*cursor: pointer;*/
+    color: white;
+    transition: all ease-in-out 200ms;
+}
+
+.legend-symbol {
+    width: 12px;
+    height: 8px;
+    margin-right: 3px;
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.legend-btn[verdict="pants-fire"] .legend-symbol {
+    background: rgb(165, 0, 38);
+}
+.legend-btn[verdict="false"] .legend-symbol {
+    background: rgb(241, 110, 67);
+}
+.legend-btn[verdict="mostly-false"] .legend-symbol {
+    background: rgb(254, 221, 141);
+}
+.legend-btn[verdict="half-true"] .legend-symbol {
+    background: rgb(215, 238, 142);
+}
+.legend-btn[verdict="mostly-true"] .legend-symbol {
+    background: rgb(100, 188, 97);
+}
+.legend-btn[verdict="true"] .legend-symbol {
+    background: rgb(0, 104, 55);
+}
+
+/*Source buttons*/
+#sourceButtonPanelDiv{
+    text-align: center;
+}
+#sourceButtonPanelDiv .margin-top{
+    margin-top: 5px;
+}
+/*#sourceButtonPanelDiv .margin-left{*/
+/*    margin-left: 5px;*/
+/*}*/
+.sourceButton {
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 0.6;
+    margin: 0;
+    min-height: 1.5rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    /*position: relative;*/
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-left: 5px;
+    /*vertical-align: baseline;*/
+    /*width: auto;*/
+}
+
+.sourceButton:hover,
+.sourceButton:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.sourceButton:hover {
+    transform: translateY(-1px);
+}
+
+.sourceButton:active {
+    background-color: #F0F0F1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(0, 0, 0, 0.65);
+    transform: translateY(0);
+}
+.sourceButton.selected {
+    background-color: #878484;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(0, 0, 0, 0.65);
+    transform: translateY(0);
+}
+
+#chart-mask{
+    stroke: black;
+}
+/*Datepickers*/
+#datepickersDiv{
+    text-align: center;
+    position: relative;
+    font-size: 11px;
+    height: 35px;
+}
+
+/*Scatter plot*/
+.point {
+    fill-opacity: 0.7;
+    stroke: #333;
+}
+.point.active {
+    fill-opacity: 1.0;
+    stroke: #888;
+}
+.point:hover {
+    stroke: black;
+}
+.point.selected{
+    fill-opacity: 1.0;
+    stroke: white;
+    stroke-width: 2px;
+}
+.point.unselected{
+    fill-opacity: 0.5;
+    stroke: #888;
+
+    /*stroke: #000;*/
+    /*stroke-width: 2px;*/
+}
+/* Axes */
+.axis line {
+    fill: none;
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-size: 13px;
+    stroke: white;
+}
+.axis-title {
+    font-size: 16px;
+    font-weight: bold;
+    fill: white;
+}
+.y-axis .tick:first-child line {
+    stroke: #b1b1b1;
+}
+.y-axis .tick:first-child text {
+    display: none;
+}
+.x-axis .tick:first-child line {
+    display: none;
+}
+.axis path {
+    display: none;
+}
+
+
+/* Tooltip */
+#tooltip {
+    position: absolute;
+    display: none;
+    background: #fff;
+    box-shadow: 3px 3px 3px 0px rgb(92 92 92 / 0.5);
+    border: 1px solid #ddd;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 8px;
+    min-width: 160px;
+    color: #333;
+}
+.inactive{
+    display: none;
+}
+
+.tooltip-title {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+}
+#tooltip ul {
+    margin: 5px 0 0 0;
+    padding-left: 20px;
+}
+
+/*autocomplete searchbox of originators*/
+* { box-sizing: border-box; }
+body {
+    font: 11px Arial;
+}
+.autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: flex;
+}
+input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 11px;
+}
+input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+}
+input[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+}
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: #e9e9e9;
+}
+.autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+.legenedContainer{
+    width: 50px;
+    margin-left: 550px;
+}
+
+/*Below from Kevin*/
+.stackedBarChartContainer{
+    min-width: 400px;
+}
+#stacked-bar-chart .x-axis .domain {
+    opacity: 0.0;
+}
+
+#stacked-bar-chart  .x-axis line {
+    opacity: 0.4;
+}
+
+#stacked-bar-chart .axis text {
+    font-size: 9px;
+}
+
+#stacked-bar-chart .axis-title {
+    font-size: 15px;
+}
+
+#stacked-bar-chart .title-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#stacked-bar-chart .instruction-text {
+    font-size: 11px;
+}
+
+
+#stacked-bar-chart .bar:hover {
+    stroke: #000;
+    stroke-width: 1px;
+    cursor: pointer;
+}
+
+#stacked-bar-chart .selector {
+    opacity: 0.7;
+}
+
+#stacked-bar-chart .y-axis .selector:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#stacked-bar-chart .selector.selected {
+    opacity: 1;
+}
+
+#statementGameContainer {
+    min-height: 300px;
+    width: 400px;
+    min-width: 400px;
+    background-color: grey;
+    position: relative;
+    /*top: -100px;*/
+    padding: 10px;
+    border: 1px solid white;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.4);
+    margin-left: 30px;
+}
+
+#statementGameContainer h1 {
+    font-size: 20px;
+    text-align: center;
+    color: black;
+}
+
+#statementGameContainer #instruction-text {
+    font-size: 15px;
+    font-weight: lighter;
+    position: relative;
+    text-align: center;
+
+}
+
+#statementGameContainer #random-statement {
+    height: 100px;
+    max-height: 100px;
+    width: 300px;
+    background-color: white;
+    position: relative;
+    left: calc(50% - 150px);
+    overflow: auto;
+    overflow-wrap: break-word;
+    padding: 5px;
+    box-sizing: border-box;
+
+}
+
+#statementGameContainer #verdict-dropdown {
+    position: relative;
+}
+
+#statementGameContainer #check-answer-button {
+    height: 40px;
+    width: 70px;
+    position: absolute;
+    left: calc(50% - 35px);
+    bottom: 20px;
+    z-index: 1;
+}
+
+#statementGameContainer #try-again-button {
+    height: 40px;
+    width: 70px;
+    position: relative;
+    left: calc(50% - 35px);
+    z-index: 0;
+    opacity: 0;
+}
+
+#statementGameContainer #selected-answer-text {
+    position: absolute;
+    top: 130px;
+    opacity: 0;
+    color: black;
+}
+
+#statementGameContainer #correct-answer-text {
+    position: relative;
+    bottom: 20px;
+    opacity: 0;
+    color: black;
+}
+#statementGameContainer #description-of-chosen-statement {
+    font-size: 15px;
+    position: relative;
+    overflow-wrap: break-word;
+    bottom: 20px;
+    opacity: 0;
+    color: black;
+
+}
+
+
+
+
+
+/* Below from Mason */
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    padding: 30px;
+  }
+
+  .container {
+    display: flex;
+  }
+  .col-left {
+    width: 350px;
+    margin-right: 45px;
+  }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  .control-bar {
+    text-align: right;
+  }
+
+  .source {
+    margin-top: 20px;
+    font-size: 10px;
+    color: #888;
+  }
+  .source a {
+    color: #888;
+  }
+
+
+  /* Chart */
+  path.area-path {
+    fill-opacity: 0.7;
+  }
+
+  /* Axes */
+
+  .axis line {
+    fill: none;
+    stroke: #cac8c8;
+    shape-rendering: crispEdges;
+    stroke-dasharray: 3 2;
+    stroke-width: 0.5;
+  }
+  .axis text {
+    font-size: .7rem;
+    fill: #6b6b6b;
+  }
+  .axis-label {
+    font-size: .75rem;
+    fill: #333;
+  }
+  .y-axis .domain, .x-axis .domain {
+    display: none;
+  }
+  .y-axis .tick:first-child line {
+    display: none !important;
+  }

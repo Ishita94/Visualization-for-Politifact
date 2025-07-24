@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Politifact</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<h1>Visualization of political statements fact-checked by Politifact</h1>
+<div id="vis">
+    <div id="filterContainer" class = "container">
+        <div id="searchBoxDiv">
+            <!--Make sure the form has the autocomplete function switched off:-->
+            <form autocomplete="off">
+                <div class="autocomplete">
+                    <input id="myInput" type="text" name="myCountry" placeholder="Statement Originator">
+                </div>
+<!--                <input id = "searchforOriginatorButton" type="submit" onclick="searchforOriginator(this)">-->
+            </form>
+        </div>
+        <div id="datepickersDiv" class="margin-left container">
+            <input id="fromDate" type="text" name="datepicker" placeholder="From Date">
+            <input id="toDate" type="text" name="datepicker" placeholder="To Date" class="margin-left">
+        </div>
+        <div id="sourceButtonPanelDiv" class="margin-left">
+            <h4>Source of statements </h4>
+
+            <div class = "container">
+                <button class="sourceButton speech" source="speech" onclick="handleClickofSourceButton(this)">Speech</button>
+                <button class="sourceButton television" source="television" onclick="handleClickofSourceButton(this)">Television</button>
+                <button class="sourceButton news" source="news" onclick="handleClickofSourceButton(this)">News</button>
+                <button class="sourceButton blog" source="blog" onclick="handleClickofSourceButton(this)">Blog</button>
+                <button class="sourceButton social_media" source="social_media" onclick="handleClickofSourceButton(this)">Social Media</button>
+    
+                <button class="sourceButton advertisement" source="advertisement" onclick="handleClickofSourceButton(this)">Advertisement</button>
+                <button class="sourceButton campaign" source="campaign" onclick="handleClickofSourceButton(this)">Campaign</button>
+            </div>
+            <div class = "container margin-top">
+                <button class="sourceButton meeting" source="meeting" onclick="handleClickofSourceButton(this)">Meeting</button>
+                <button class="sourceButton radio" source="radio" onclick="handleClickofSourceButton(this)">Radio</button>
+                <button class="sourceButton email" source="email" onclick="handleClickofSourceButton(this)">Email</button>
+                <button class="sourceButton testimony" source="testimony" onclick="handleClickofSourceButton(this)">Testimony</button>
+                <button class="sourceButton statement" source="statement" onclick="handleClickofSourceButton(this)">Statement</button>
+                <button class="sourceButton other" source="other" onclick="handleClickofSourceButton(this)">Other</button>
+            </div>
+            <div id="legendDiv">
+                <ul class="legend">
+                    <li class="legend-btn" verdict="pants-fire"><span class="legend-symbol"></span> Pants-fire (Accuracy Score = 0.0)</li>
+                    <li class="legend-btn" verdict="false"><span class="legend-symbol"></span> False (Accuracy Score = 1.0)</li>
+                    <li class="legend-btn" verdict="mostly-false"><span class="legend-symbol"></span> Mostly False (Accuracy Score = 2.0)</li>
+                    <li class="legend-btn" verdict="half-true"><span class="legend-symbol"></span> Half True (Accuracy Score = 3.0)</li>
+                    <li class="legend-btn" verdict="mostly-true"><span class="legend-symbol"></span> Mostly True (Accuracy Score = 4.0)</li>
+                    <li class="legend-btn" verdict="true"><span class="legend-symbol"></span> True (Accuracy Score = 5.0)</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class = "container">
+<!--        <div class = "summeryTextContainer">-->
+        <h4 class="textforOverAllSummary"> Total number of statements is 13240, total number of top originators is 263</h4>
+        <h4 class="textforOriginatorSummary"></h4>
+         <h4 id="textforStatementSummary"> , number of selected statements is 13240</h4>
+<!--            </div>-->
+
+</div>
+    <div class = "container margin-top">
+        <div class="stackedBarChartContainer">
+        <h3>Statement count across 13 sources </h3>
+
+        <p>Hover over the stacks to view the exact statement count for each source. You can also select each bar or source text label to filter the whole dataset!</p>
+
+            <svg id="stacked-bar-chart" ></svg>
+        </div>
+        <div class="stackedAreaChartContainer" class="margin-top">
+            <h3 style="text-indent:30px;">Statement count over period of time </h3>
+
+            <p style="text-indent:30px;">Hover over the colored areas to view the statement count for different verdicts in that month.</p>
+            <p style="text-indent:30px;">Click and brush over the white region to zoom in on this period of time.
+            Double click to zoom out and return the full range.</p>
+
+            <div id="area-chart" class="margin-left"></div>
+        </div>
+
+
+
+    </div>
+    <div class = "container margin-top">
+        <div id="statementGameContainer" class="margin-top">
+            <h1>Quiz Panel</h1>
+            <h2 id="instruction-text" >Guess the verdict of the following statement.</h2>
+            <div id="random-statement" class="margin-top">
+
+            </div>
+            <div id="verdict-dropdown" class="margin-top">
+                <label id="dropdown-text" for="verdict">Choose a verdict:</label>
+                
+                <select name="verdict" id="verdict-selector">
+                    <option value="0">Pants-fire</option>
+                    <option value="1">False</option>
+                    <option value="2">Mostly False</option>
+                    <option value="3">Half True</option>
+                    <option value="4">Mostly True</option>
+                    <option value="5">True</option>
+                </select>
+                
+            </div>
+            <div id="result-of-quiz">
+                <h3 id="selected-answer-text"></h3>
+                <h3 id="correct-answer-text"></h3>
+                <h3 id="description-of-chosen-statement"></h3>
+            </div>
+            <button id="check-answer-button">Check Answer</button> 
+            <button id="try-again-button">Play Again</button>
+            
+        </div>
+        <div id="scatterplotContainer" class="margin-left">
+            <h3>Contributions of statements of top statement originators </h3>
+
+            <p>This graph shows the top statement originators, who have contributed equal or more than 10 statements in
+                this dataset. Each circle represents an originator. Circle size encodes the number of statements made
+                by each originator. Circle color encodes accuracy score (average accuracy of statements) of each
+                originator, where colors are generated by a diverging continuous color scale, ranging from
+                red (Pants-fire, Accuracy Score=0.0) to green (True, Accuracy Score=5.0).
+                Please zoom in to view each circle easily.</p>
+            <div class="margin-left legenedContainer">
+
+                <script type="module">
+                    // Import Observable runtime and the @d3/color-legend notebook
+                    import {Runtime} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+                    import d3_colorLegend from "https://api.observablehq.com/@d3/color-legend.js?v=3";
+                    // Container element into which the swatches will render
+                    const container = document.querySelector(".legenedContainer")
+
+                    renderLegendforDivergingColorScheme(container)
+
+                    async function renderLegendforDivergingColorScheme(el) {
+                        const module = new Runtime().module(d3_colorLegend);
+                        const legend = await module.value("Legend");
+                        const element = legend(d3.scaleDiverging(d3.interpolateRdYlGn).domain([0.0, 2.5, 5.0]), {
+                            title: "Accuracy Score",
+                            tickFormat: ".1f"
+                        })
+
+                        // Finally, call `swatches` with our options and append it to the container
+                        //const element = swatches({color, marginLeft: margin.left, columns: "180px"});
+                        el.appendChild(element);
+                    }
+                </script>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="tooltip"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+            integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href=
+                  'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+
+    <script src=
+                    "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" >
+    </script>
+
+    <script src=
+                    "https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" >
+    </script>
+
+    <script src="js/d3.v6.min.js"></script>
+    <!-- Our JS code -->
+    <script src="js/stackedAreaChart.js"></script>
+    <script src="js/stackedBarChart.js"></script>
+    <script src="js/scatterplot.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
